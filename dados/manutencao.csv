@@ -1,6 +1,13 @@
-equipamento,data_falha,tempo_reparo_horas,tipo_falha
-Bomba 01,2026-08-01,4,Elétrica
-Compressor 01,2026-08-03,6,Mecânica
-Bomba 02,2026-08-05,3,Elétrica
-Motor 01,2026-08-07,8,Mecânica
-Bomba 01,2026-08-10,5,Hidráulica
+equipamento,data_falha,tempo_reparo_horas,tipo_falha,prioridade,custo_reparo
+Bomba 01,2026-08-01,4,Elétrica,Alta,850
+Compressor 01,2026-08-03,6,Mecânica,Média,1200
+Bomba 02,2026-08-05,3,Elétrica,Baixa,450
+Motor 01,2026-08-07,8,Mecânica,Alta,1800
+Bomba 01,2026-08-10,5,Hidráulica,Média,950
+Compressor 01,2026-08-12,4,Mecânica,Alta,900
+Bomba 02,2026-08-14,2,Elétrica,Baixa,300
+Motor 01,2026-08-16,7,Elétrica,Alta,1500
+Bomba 01,2026-08-18,3,Hidráulica,Média,600
+Compressor 01,2026-08-20,5,Mecânica,Alta,1100
+Motor 01,2026-08-22,4,Elétrica,Média,750
+Bomba 02,2026-08-24,6,Elétrica,Alta,1300
