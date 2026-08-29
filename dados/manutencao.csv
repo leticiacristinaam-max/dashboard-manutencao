@@ -1,0 +1,6 @@
+equipamento,data_falha,tempo_reparo_horas,tipo_falha
+Bomba 01,2026-08-01,4,Elétrica
+Compressor 01,2026-08-03,6,Mecânica
+Bomba 02,2026-08-05,3,Elétrica
+Motor 01,2026-08-07,8,Mecânica
+Bomba 01,2026-08-10,5,Hidráulica
