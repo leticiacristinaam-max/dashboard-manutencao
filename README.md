@@ -2,6 +2,10 @@
 
 Projeto de análise de dados aplicada à gestão da manutenção utilizando Python e Power BI.
 
+## Veja o dashboard funcionando
+
+**[Abrir o dashboard](https://dashboard-manutencao-hur74yh4mvbceqjq6dydzk.streamlit.app/)**, publicado no Streamlit Community Cloud com dados de exemplo.
+
 ## O que o dashboard faz
 
 Um dashboard interativo em [Streamlit](https://streamlit.io/) para acompanhar indicadores de manutenção de equipamentos:

@@ -27,6 +27,16 @@ COR_GRADE = "#e1e0d9"
 COR_TEXTO = "#52514e"
 FONTE = "system-ui, -apple-system, 'Segoe UI', sans-serif"
 
+
+def br(valor, casas=2):
+    """Formata número no padrão brasileiro: 11.700,00"""
+    texto = f"{valor:,.{casas}f}"
+    return texto.replace(",", "X").replace(".", ",").replace("X", ".")
+
+
+def brl(valor, casas=2):
+    return f"R$ {br(valor, casas)}"
+
 st.set_page_config(
     page_title="Dashboard de Manutenção",
     page_icon="🔧",
@@ -287,14 +297,14 @@ with tab_dashboard:
 
         linha1 = st.columns(4)
         linha1[0].metric("🔴 Quantidade de falhas", quantidade_falhas)
-        linha1[1].metric("⏱️ MTTR (tempo médio de reparo)", f"{mttr:.2f} h")
-        linha1[2].metric("📅 MTBF (tempo médio entre falhas)", f"{mtbf_dias:.1f} dias")
-        linha1[3].metric("✅ Disponibilidade", f"{disponibilidade:.1f} %")
+        linha1[1].metric("⏱️ MTTR (tempo médio de reparo)", f"{br(mttr)} h")
+        linha1[2].metric("📅 MTBF (tempo médio entre falhas)", f"{br(mtbf_dias, 1)} dias")
+        linha1[3].metric("✅ Disponibilidade", f"{br(disponibilidade, 1)} %")
 
         linha2 = st.columns(3)
-        linha2[0].metric("💰 Custo total", f"R$ {custo_total:,.2f}")
-        linha2[1].metric("💵 Custo médio por manutenção", f"R$ {custo_medio:,.2f}")
-        linha2[2].metric("⚠️ Falhas de alta prioridade", f"{pct_alta:.1f} %")
+        linha2[0].metric("💰 Custo total", brl(custo_total))
+        linha2[1].metric("💵 Custo médio por manutenção", brl(custo_medio))
+        linha2[2].metric("⚠️ Falhas de alta prioridade", f"{br(pct_alta, 1)} %")
 
         st.divider()
 
@@ -329,7 +339,7 @@ with tab_dashboard:
                 .sort_values()
             )
             st.plotly_chart(
-                grafico_barras_h(tempo_equipamento, COR_TEMPO, lambda v: f"{v:.1f} h"),
+                grafico_barras_h(tempo_equipamento, COR_TEMPO, lambda v: f"{br(v, 1)} h"),
                 width="stretch",
             )
 
@@ -341,11 +351,16 @@ with tab_dashboard:
                 .sort_values()
             )
             st.plotly_chart(
-                grafico_barras_h(custo_equipamento, COR_CUSTO, lambda v: f"R$ {v:,.0f}"),
+                grafico_barras_h(custo_equipamento, COR_CUSTO, lambda v: brl(v, 0)),
                 width="stretch",
             )
 
         st.divider()
 
         st.subheader("📋 Registros de manutenção")
-        st.dataframe(dados_filtrados, width="stretch")
+        tabela = dados_filtrados.copy()
+        tabela["data_falha"] = pd.to_datetime(tabela["data_falha"]).dt.strftime("%d/%m/%Y")
+        tabela["tempo_reparo_horas"] = tabela["tempo_reparo_horas"].map(lambda v: f"{br(v, 1)} h")
+        tabela["custo_reparo"] = tabela["custo_reparo"].map(brl)
+        tabela.columns = ["Equipamento", "Data da falha", "Tempo de reparo", "Tipo de falha", "Prioridade", "Custo do reparo"]
+        st.dataframe(tabela, width="stretch", hide_index=True)
